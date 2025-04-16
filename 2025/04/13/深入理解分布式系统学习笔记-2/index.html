@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Bold/result.css' />
+  <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/jhlst/dist/%E4%BA%AC%E8%8F%AF%E8%80%81%E5%AE%8B%E4%BD%93v2_002/result.css' />  
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分布式系统数据模型 [ Blog ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="hxh">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="Blog" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+
+<script defer>
+  document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState == 'hidden') {
+      normal_title = document.title;
+      document.title = '2993';
+  } else document.title = normal_title;
+});
+
+</script>
+  <body data-theme="light" class="notransition">
+    <script defer>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/tags/"> 标签</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/categories/"> 类别</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 档案馆</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button>
+<div id="overlay" class="overlay">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%88%86%E5%8C%BA"><span class="toc-text"> 一、分区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%B9%B3%E5%88%86%E5%8C%BA%E7%AE%97%E6%B3%95"><span class="toc-text"> 水平分区算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E5%A4%8D%E5%88%B6"><span class="toc-text"> 二、复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-text"> 单主复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-text"> 多主复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="toc-text"> 无主复制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-cap%E5%AE%9A%E7%90%86"><span class="toc-text"> 三、CAP定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pacelc%E5%AE%9A%E7%90%86"><span class="toc-text"> PACELC定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base%E6%A8%A1%E5%9E%8B"><span class="toc-text"> BASE模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E4%B8%80%E8%87%B4%E6%80%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text"> 四、一致性模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text"> 线性一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text"> 顺序一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E6%9E%9C%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text"> 因果一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text"> 最终一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text"> 以客户端为中心的一致性模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text"> 隔离级别</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+  <main class="page-content" aria-label="Content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="tag"># 分布式系统</a>
+          </div>
+        
+        <h1 class="header-title" itemprop="headline">分布式系统数据模型</h1>
+          <div class="post-meta">
+            最后更新: <time>Apr 16, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">hxh</span>
+            </span>
+            字数: <span class="post-count">2.2k</span>
+            预计阅读时间: <span class="post-count">7min</span> 
+          </div>       
+        </header>
+          <div class="page-content"><p>如何应对分布式的数据基础问题？比如：可用性、吞吐量、数据一致性（强一致性、弱一致性、最终一致性）</p>
+<h2 id="一-分区"><a class="markdownIt-Anchor" href="#一-分区"></a> 一、分区</h2>
+<p>可以分为<strong>垂直分区</strong>和<strong>水平分区</strong>（常称为分片）</p>
+<p>垂直分区受到列的数量限制，水平分区不受该限制</p>
+<h3 id="水平分区算法"><a class="markdownIt-Anchor" href="#水平分区算法"></a> 水平分区算法</h3>
+<ul>
+<li>范围分区（简单，但是查询范围过大或者数据分布不均或流量不均衡有问题）</li>
+<li>哈希分区（数据分布相对均匀，对范围查询支持不好以及节点动态增减对hash函数有影响）</li>
+<li>一致性哈希-特殊的哈希分区（改进了数据节点的增减对数据的影响问题，但是范围查询支持还是不好）</li>
+</ul>
+<p>分区还有一个挑战：如何实现事务？</p>
+<h2 id="二-复制"><a class="markdownIt-Anchor" href="#二-复制"></a> 二、复制</h2>
+<p>好处：提高可用性，对于不同地区可以设置副本提高相应速度，多台服务器有更高的流量承受能力、提高吞吐量</p>
+<p>但是也带来了复杂性</p>
+<h3 id="单主复制"><a class="markdownIt-Anchor" href="#单主复制"></a> 单主复制</h3>
+<ul>
+<li>同步复制</li>
+<li>异步复制</li>
+<li>半同步复制</li>
+</ul>
+<p>容易实现，更容易支持事务操作，适合读多写少</p>
+<p>缺点：写请求瓶颈，主从切换问题（手动切换太慢了，自动切换可能会有脑裂问题，最主要的问题是如何使系统中只有一个主节点）</p>
+<h3 id="多主复制"><a class="markdownIt-Anchor" href="#多主复制"></a> 多主复制</h3>
+<p>数据冲突问题：不止一个节点处理写请求且网络存在延迟，这就意味着节点可能会对某些请求的正确顺序产生分歧，导致多个节点上的数据不一致，这种现象简称为<strong>数据冲突</strong></p>
+<p>最好的方法是避免数据冲突的产生，将特定账户的请求路由到同一个节点上，但是还是有风险，主要的解决思路是：</p>
+<ol>
+<li>冲突避免：分布式锁、分布式事务</li>
+<li>冲突发现和解决：
+<ol>
+<li>发现：乐观锁、向量时钟</li>
+<li>解决：最后写入者正确、让应用层解决、因果关系追踪、无冲突复制数据类型(CRDT)</li>
+</ol>
+</li>
+</ol>
+<h3 id="无主复制"><a class="markdownIt-Anchor" href="#无主复制"></a> 无主复制</h3>
+<p><strong>基本思想</strong>：客户端不仅向一个节点发送写请求，而是将请求发送到多个节点，在某些情况下甚至会发送给所有节点，<strong>去除掉了领导者的概念</strong></p>
+<p>问题1：由于去除掉领导者的概念，一些写操作会出现失败或者错误排序，读取数据的时候会出现问题，所以客户端读取数据时不会只从一个节点中读取数据，通过比较版本号决定读取出的数据的最终值</p>
+<p>问题2：这里遗留一个问题，数据不一致的节点不能让它一直不一致，得通过某种方式修复，分为读修复、反熵过程</p>
+<ul>
+<li>读修复：通过客户端来进行修复，读取数据时发现过时的节点由客户端主动更新</li>
+<li>反熵过程：后台开一个任务比对最新数据节点和其他节点的不一致进行修复，<strong>和基于领导者的复制不同,反熵过程不保证写操作的顺序，只保证最后结果一样</strong>
+<ul>
+<li>Dynamo使用Merkle Tree（Hash Tree）来减少验证时的数据传输量，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/fengzhiwu/p/5524324.html">https://www.cnblogs.com/fengzhiwu/p/5524324.html</a></li>
+</ul>
+</li>
+</ul>
+<p>问题3：基干Quorum的数据冗余机制</p>
+<p>在一个由N个节点组成的系统中，我们要求至少W个节点写入成功,并且需要同时从R个节点中读取数据，只要<strong>W＋R&gt;N</strong>且<strong>W&gt;N/2</strong>，则读取的R个返回值中至少包含一个最新的值</p>
+<h2 id="三-cap定理"><a class="markdownIt-Anchor" href="#三-cap定理"></a> 三、CAP定理</h2>
+<p>三个特性：一致性、可用性、分区容错性</p>
+<p>注意点：</p>
+<ul>
+<li>三种特性只能选择两个，但是一般情况下网络分区很少发生，当系统没有分区的时候没有理由放弃CA，只有网络分区的情况下需要抛弃某个特性</li>
+<li>CAP忽略了网络的延迟问题，系统需要在网络延迟的情况下做出权衡，一个例子是单主复制方案：选择同步复制还是异步复制</li>
+</ul>
+<h3 id="pacelc定理"><a class="markdownIt-Anchor" href="#pacelc定理"></a> PACELC定理</h3>
+<p>论点：CAP定理忽略分布式系统中的延迟影响是一个重大疏忽，因为延迟在系统运行过程中时刻存在，而网络分区不会一直存在</p>
+<p>定理内容：PACELC定理指出,在分布式系统存在网络分区（P）的情况下’必须在可用性（A）和一致性（C）之间做出选择;否则（E）系统在没有网络分区且正常运行的情况下，必须在延迟（L）和一致性（C）之间做出选择</p>
+<h3 id="base模型"><a class="markdownIt-Anchor" href="#base模型"></a> BASE模型</h3>
+<p>基本可用、软状态、最终一致性</p>
+<h2 id="四-一致性模型"><a class="markdownIt-Anchor" href="#四-一致性模型"></a> 四、一致性模型</h2>
+<p><strong>一致性的定义？</strong></p>
+<ul>
+<li>CAP定理中的一致性</li>
+<li>数据库的ACID的一致性：ACID中的一致性主要指的是数据库内部的数据完整性和业务规则</li>
+<li>Paxos和Raft的一致性（但是这本书的作者认为这两种算法不能叫做分布式一致性算法，只能叫做分布式共识算法）</li>
+</ul>
+<p>一致性模型就是指,在并发编程中,系统和开发者之间的一种约定，如果开发者遵循某些规则，那么开发者执行读操作或写操作的结果是可预测的</p>
+<h3 id="线性一致性"><a class="markdownIt-Anchor" href="#线性一致性"></a> 线性一致性</h3>
+<p>分布式系统的操作看上去都是<strong>原子</strong>的， 整个系统<strong>看起来就好像只有一个节点</strong></p>
+<p>严格定义：给定一个执行历史，执行历史根据并发操作可以扩展为多个顺序历史，只要从中找到一个合法的顺序历史,那么该执行历史就是线性一致性的</p>
+<p>并发编程可以通过加锁、CAS来实现线性一致性；一个分布式的系统可以通过共识算法实现线性一致性（但是共识算法不一定能够保证能够达到线性一致性），Spanner就实现了线性一致性</p>
+<p>线性一致性的代价：并发编程中的同步原语和原子变量；最困难的是需要一个全局时钟，这样才能知道每个事件发生的事件和全局顺序</p>
+<h3 id="顺序一致性"><a class="markdownIt-Anchor" href="#顺序一致性"></a> 顺序一致性</h3>
+<p>允许对并发操作历史进行重新排列，但是他的约束比线性一致性要弱，顺序一致性<strong>只要求同一个客户端的操作在排序后的先后顺序不变</strong>，但是不同客户端可以随意重新排列</p>
+<p>和线性一致性的区别在于没有全局时间的限制，只关注局部的顺序</p>
+<h3 id="因果一致性"><a class="markdownIt-Anchor" href="#因果一致性"></a> 因果一致性</h3>
+<p>不依赖于全局操作的顺序，其要求以<mark>相同的顺序看到因果相关的操作</mark>，没有因果关系的并发操作可以被不同的进程以不同的顺序看到</p>
+<p>关键是体现了“<mark>发生于…之前(Happens-Before)</mark>”关系</p>
+<h3 id="最终一致性"><a class="markdownIt-Anchor" href="#最终一致性"></a> 最终一致性</h3>
+<p>字面意思</p>
+<h3 id="以客户端为中心的一致性模型"><a class="markdownIt-Anchor" href="#以客户端为中心的一致性模型"></a> 以客户端为中心的一致性模型</h3>
+<p>上述四种一致性模型可以归纳为<strong>以数据为中心的一致性模型</strong>，另一种类别就是<strong>以客户端为中心的一致性模型</strong>，不再从系统整体的角度考量每个副本的数据是否一致，而是从客户端的读写结果来进行判断</p>
+<ul>
+<li><strong>单调读</strong>：保证客户端不会读到旧值</li>
+<li><strong>单调写</strong>：保证客户端的写操作是串行的</li>
+<li><strong>读你所写</strong>：当写操作完成后，在同一副本或其他副本上的读操作必须能够读到写入的值，但是要注意必须是单个客户端(进程)</li>
+<li><strong>PRAM(Pipelined RAM)模型</strong>：<mark>同一个客户端</mark>的多个写操作，将被所有的副本按照同样的执行顺序观察到，不同客户端没有这个要求</li>
+<li><strong>读后写模型</strong>：同一个客户端对于数据项x，如果先读到了写操作w1的结果v，那么之后的写操作，都会保证基于这个结果v或者更新的值。读后写看上去很想因果一致性，也叫做会话因果一致性</li>
+</ul>
+<h2 id="隔离级别"><a class="markdownIt-Anchor" href="#隔离级别"></a> 隔离级别</h2>
+<p>异常情况：脏写、脏读、不可重复读、幻读、更新丢失、读偏斜、写偏斜</p>
+<p>不同的隔离级别：</p>
+<p><img src="C:%5CUsers%5C31426%5CDocuments%5Ccode%5Cblog%5Csource%5Cresources%5Cimage-20250416155420574.png" alt="image-20250416155420574" /></p>
+<p>一致性和隔离级别的区别：一致性模型适用于单个操作对象，该数据可能存在多个副本；隔离级别通常涉及多个操作对象</p>
+</div>          
+          <nav class="post-nav">
+    
+    
+    <a class="post-nav-item post-nav-next" href="/2025/04/12/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">深入理解分布式系统笔记-1</span>
+    </a>
+    
+  </nav>
+
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  document.body.classList.add('loaded');
+});
+
+  </script>
+</body>
+</html>
